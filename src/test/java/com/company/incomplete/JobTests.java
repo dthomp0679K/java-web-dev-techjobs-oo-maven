@@ -1,85 +1,80 @@
 package com.company.incomplete;
 import static org.junit.jupiter.api.Assertions.*;
 import com.company.Job;
-import org.junit.Before;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import com.company.CoreCompetency;
 import com.company.Employer;
 import com.company.PositionType;
-import com.company.Main;
+
 import com.company.Location;
 
 
 
+
 public class JobTests {
-
-    @Before
-    public void createJobObjects(){
-        Job testJob1 = new Job();
-        Job testJob2 = new Job();
-    }
-    // you can rename the tests, or delete them and rewrite them from scratch, but I went ahead and provided you the names of tests I created -- I followed the writeup pretty honestly
-    Job testJob1 = new Job();
-    Job testJob2 = new Job();
-
+static  Job testJob1, testJob2, testJob3, testJob4, testJob5, testJob6;
+@BeforeAll
+        static void createobject() {
+     testJob1 = new Job();
+     testJob2 = new Job();
+     testJob3 = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality Control"), new CoreCompetency("Persistence"));
+     testJob4 = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality Control"), new CoreCompetency("Persistence"));
+     testJob5 = new Job("Data not available", new Employer("Walgreen"), new Location("Data not available"), new PositionType("ASM"), new CoreCompetency("Data not available"));
+     testJob6 = new Job();
+    //Making sure different Id's are assigned:
+}
     @Test
     public void testSettingJobId() {
-       assertFalse(testJob1.equals(testJob2));
-       assertTrue(testJob2.getId() - 1 == testJob1.getId());
-
-        //id values are not the same
-        //id values differ by one
-
+        assertTrue(testJob1.getId() + 1 == testJob2.getId());
     }
+    // you can rename the tests, or delete them and rewrite them from scratch, but I went ahead and provided you the names of tests I created -- I followed the writeup pretty honestly
 
 
 
     @Test
     public void testJobConstructorSetsAllFields() {
-        // declared new job object
-        Job testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-
-      //Use assert statements to test that the constructor correctly assigns the class and value of each field.
-assertTrue(testJob instanceof Job);
-//The instanceof keyword can be used to check the class of an object. The result of the comparison is a boolean.
-assertTrue(testJob.getName() == "Product tester");
-
-assertTrue(testJob.getEmployer() instanceof Employer);
-assertTrue(testJob.getEmployer().getValue() ==  "ACME");
-
-assertTrue(testJob.getLocation() instanceof Location);
-assertTrue(testJob.getLocation().getValue() == "Desert");
-
-assertTrue(testJob.getPositionType() instanceof PositionType);
-assertTrue(testJob.getPositionType().getValue() == "Quality control");
-
-assertTrue(testJob.getCoreCompetency() instanceof CoreCompetency);
-assertTrue(testJob.getCoreCompetency().getValue() == "Persistence");
+        assertEquals(3, testJob3.getId());
+        assertEquals("Product Tester", testJob3.getName());
+        assertEquals("ACME", testJob3.getEmployer().toString());
+        assertEquals("Desert", testJob3.getLocation().toString());
+        assertEquals("Quality Control", testJob3.getPositionType().toString());
+        assertEquals("Persistence", testJob3.getCoreCompetency().toString());
     }
 
     @Test
     public void testJobsForEquality() {
-        Job Job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));;
-        Job Job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));;
-// test chekcing if these two object are false.
-    assertFalse(Job1.equals(Job2));
+        assertFalse(testJob3.equals(testJob4));
+
     }
 
     // I found the instructions around the three toString() tests a little confusing, so I created three tests following the three bullet points:
     // you can follow TDD if you want, or you can write the implementation first and then get the tests to pass, either is a fine approach
     @Test
     public void testToStringContainsBlankLines() {
+        assertTrue(testJob3.toString().startsWith("\n"));
+        assertTrue(testJob3.toString().endsWith("\n"));
 
     }
 
     @Test
     public void testToStringHasLabelsForEachField() {
 
+        String expected = String.format("\nID: %d\nName: %s\nEmployer: %s\nLocation: %s\nPosition Type: %s\nCore Competency: %s\n", testJob3.getId(), testJob3.getName(), testJob3.getEmployer(), testJob3.getLocation(), testJob3.getPositionType(), testJob3.getCoreCompetency());
+        String actual = testJob3.toString();
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testToStringDataNotAvailable() {
+        String expected = String.format("\nID: %d\nName: %s\nEmployer: %s\nLocation: %s\nPosition Type: %s\nCore Competency: %s\n", testJob5.getId(), testJob5.getName(), testJob5.getEmployer(), testJob5.getLocation(), testJob5.getPositionType(), testJob5.getCoreCompetency());
+        String actual = testJob5.toString();
+        assertEquals(expected, actual);
+        }
 
-    }
-}
+  //  public void toStringDoesNotExist() {
+      //  String toStringAllBlank = testJob5.toString();
+      //  assertTrue(toStringAllBlank.("OOPS! This job does not seem to exist.");
+  }
+
